@@ -1,0 +1,6 @@
+class Data:
+    ...
+
+
+class SResponse(Data):
+    ...
