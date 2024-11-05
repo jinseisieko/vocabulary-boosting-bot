@@ -10,8 +10,13 @@ def main() -> None:
     """the main method for checking the parser's performance"""
     logger.info("Parser tests have started")
     response: SResponse = get_general_data()
+    failed = False
     if len(response.data.values()) == 0:
         logger.warning("taking general data failed")
+        failed = True
     else:
         logger.info("taking general data completed: %r", response.data)
-    logger.info("Parser tests have completed correctly")
+    if not failed:
+        logger.info("Parser tests have completed correctly")
+    else:
+        logger.warning("Parser tests have completed incorrectly")
