@@ -1,4 +1,3 @@
 from .functional import get_data_from_multitran
 from . import checking
-
-checking.main()
+from .checking import main as test

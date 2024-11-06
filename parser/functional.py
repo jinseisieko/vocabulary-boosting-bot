@@ -15,6 +15,7 @@ def get_data_from_multitran(request: SMRequest) -> SResponse:
     soup = BeautifulSoup(html_data, "html.parser")
     bootstrap_data = [elm.find_next("a").text for elm in soup.find_all(class_='trans')]
     dict_response = {
+        "request": request.data['request'],
         "all_trans": [],
     }
     for word in bootstrap_data:
