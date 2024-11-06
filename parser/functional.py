@@ -30,8 +30,6 @@ def get_general_data() -> SResponse:
     html_data = response.text
     soup = BeautifulSoup(html_data, "html.parser")
     info = soup.find_all("div", class_="info")
-    if len(info) == 0:
-        logger.warning("NOTHING")
     dict_response = dict()
     for name, *values in [elm.text.split() for elm in info]:
         dict_response[name[:-1]] = " ".join(values)
