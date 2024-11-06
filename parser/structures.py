@@ -22,4 +22,5 @@ class SMRequest(Data):
         }
         super().__init__(data)
 
-    ...
+    def __hash__(self):
+        return self.data["request"].__hash__()

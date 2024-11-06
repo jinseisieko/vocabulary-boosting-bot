@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from .structures import SResponse, SMRequest
 import logging
 import requests
@@ -13,14 +15,29 @@ def get_data_from_multitran(request: SMRequest) -> SResponse:
     response = requests.get(f"https://www.multitran.com/m.exe?ll1=1&ll2=2&s={request.data['request']}")
     html_data = response.text
     soup = BeautifulSoup(html_data, "html.parser")
-    bootstrap_data = [elm.find_next("a").text for elm in soup.find_all(class_='trans')]
+
     dict_response = {
         "request": request.data['request'],
-        "all_trans": [],
+        "all": [],
+        "gen": [],
     }
-    for word in bootstrap_data:
-        word.strip()
-        dict_response["all_trans"].append(word)
+
+    bootstrap_data = [elm.find_all("a", title=False) for elm in soup.find_all(class_='trans')]
+    for _as in bootstrap_data:
+        words = [a.text for a in _as]
+        for word in words:
+            word.strip()
+            if not (word in dict_response["all"]):
+                dict_response["all"].append(word)
+
+    bootstrap_data = [elm.find_parent("tr").find(class_="trans").find_all("a", title=False) for elm
+                      in soup.find_all("nobr", text="gen.")]
+    for _as in bootstrap_data:
+        words = [a.text for a in _as]
+        for word in words:
+            word.strip()
+            if not (word in dict_response["gen"]):
+                dict_response["gen"].append(word)
     return SResponse(dict_response)
 
 

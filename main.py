@@ -11,7 +11,9 @@ logger = logging.getLogger(__name__)
 def main():
     logger.info("123")
     print(os.getenv("BOT_TOKEN"))
-    print(parser.get_data_from_multitran(SMRequest('among')).data)
+    for _ in range(1):
+        parser.get_data_from_multitran(SMRequest("can"))
+
 
 
 if __name__ == "__main__":

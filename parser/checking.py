@@ -21,7 +21,7 @@ def main() -> None:
 
     response = get_data_from_multitran(SMRequest("clock"))
     assert len(response.data) != 0
-    if not ("часы" in response.data["all_trans"]):
+    if not ("часы" in response.data["all"]):
         logger.warning("checking parser of multitran failed")
         failed = True
     else:
