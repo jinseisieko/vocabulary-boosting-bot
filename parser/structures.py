@@ -14,5 +14,12 @@ class SResponse(Data):
     ...
 
 
-class SRequest:
+class SMRequest(Data):
+
+    def __init__(self, request: str):
+        data = {
+            "request": request,
+        }
+        super().__init__(data)
+
     ...
