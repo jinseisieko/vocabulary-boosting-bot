@@ -15,7 +15,6 @@ def main():
         parser.get_data_from_multitran(SMRequest("can"))
 
 
-
 if __name__ == "__main__":
     logging.basicConfig(
         filename='.log',
@@ -26,5 +25,6 @@ if __name__ == "__main__":
     logger.info("start")
     load_dotenv()
     import parser
+
     parser.test()
     main()

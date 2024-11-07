@@ -1,3 +1,4 @@
+from collections import defaultdict
 from pprint import pprint
 
 from .structures import SResponse, SMRequest
@@ -20,6 +21,7 @@ def get_data_from_multitran(request: SMRequest) -> SResponse:
         "request": request.data['request'],
         "all": [],
         "gen": [],
+        "category": defaultdict(list)
     }
 
     bootstrap_data = [elm.find_all("a", title=False) for elm in soup.find_all(class_='trans')]
@@ -38,6 +40,16 @@ def get_data_from_multitran(request: SMRequest) -> SResponse:
             word.strip()
             if not (word in dict_response["gen"]):
                 dict_response["gen"].append(word)
+    bootstrap_data = [(elm.find_parent("tr").find(class_="trans").find_all("a", title=False), elm.find_next("a").text)
+                      for elm
+                      in soup.find_all(class_="subj")]
+    for _as, subj in bootstrap_data:
+        words = [a.text for a in _as]
+        for word in words:
+            word.strip()
+            if not (word in dict_response["gen"]):
+                dict_response["category"][subj].append(word)
+    dict_response["category"] = dict(dict_response["category"])
     return SResponse(dict_response)
 
 
