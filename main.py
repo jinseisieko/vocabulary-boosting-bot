@@ -1,6 +1,7 @@
 import logging
 import os
 
+import requests
 from dotenv import load_dotenv
 
 from parser.structures import SMRequest
@@ -9,10 +10,8 @@ logger = logging.getLogger(__name__)
 
 
 def main():
-    logger.info("123")
     print(os.getenv("BOT_TOKEN"))
-    for _ in range(1):
-        parser.get_data_from_multitran(SMRequest("can"))
+    parser.get_data_from_multitran(SMRequest("can"))
 
 
 if __name__ == "__main__":
