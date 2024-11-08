@@ -40,6 +40,7 @@ def get_data_from_multitran(request: SMRequest) -> SResponse:
             word.strip()
             if not (word in dict_response["gen"]):
                 dict_response["gen"].append(word)
+
     bootstrap_data = [(elm.find_parent("tr").find(class_="trans").find_all("a", title=False), elm.find_next("a").text)
                       for elm
                       in soup.find_all(class_="subj")]
@@ -50,6 +51,7 @@ def get_data_from_multitran(request: SMRequest) -> SResponse:
             if not (word in dict_response["gen"]):
                 dict_response["category"][subj].append(word)
     dict_response["category"] = dict(dict_response["category"])
+
     return SResponse(dict_response)
 
 
